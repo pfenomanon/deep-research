@@ -1,7 +1,19 @@
+version: '3.8'
+
 services:
   deep-research:
     build: .
+    container_name: deep-research
     env_file:
       - .env.local
     tty: true
     stdin_open: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    volumes:
+      - ./data:/app/data  # Persistent storage
+    ports:
+      - "5000:5000"  # Adjust if the application uses a different port
